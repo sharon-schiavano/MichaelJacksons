@@ -1,0 +1,25 @@
+
+#login-bar {
+    display: inline;
+}
+
+.navbar {
+    background-color: rgb(39, 35, 35);
+}
+
+.navbar a {
+    text-decoration:none;
+    margin: 5px;
+}
+
+.input-login {
+    display:flex;
+    flex-direction: column;
+}
+
+.input-login input {
+    margin: 10px;
+    width: 500px;
+}
+
+
