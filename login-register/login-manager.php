@@ -7,6 +7,7 @@
         return strpos($input,"@");       //se è >=0 allora c'è una @ e quindi va considerata come un possibile indirizzo e-mail; altrimenti va considerato come uno username
     }
 
+	session_start();
 
     $db = pg_connect($connection_string) or die('Impossibile connettersi al database: ' . pg_last_error());
 
@@ -35,28 +36,32 @@
 
 	if (pg_num_rows($ret) == 0) {
 
-		if (controlloInput($input) > -1)
-			echo "Errore: l'email $input non è associata ad alcun account!";
-
-		else 
-			echo "Errore: username $input non esiste!";
-
-		exit;
+		if (controlloInput($input) > -1) {
+		//	echo "Errore: l'email $input non è associata ad alcun account!";
+			$_SESSION['bademail'] = $input;
 		}
+		else  {
+		//	echo "Errore: username $input non esiste!";
+			$_SESSION['badusername'] = $input;
+
+			}
+		header("location: index.php");
+		exit;
+	}
 	
 	
 	$row = pg_fetch_assoc($ret);
 
 	if ( password_verify ($password, $row['password'] ) ) {
 
-		session_start();
-
 		$_SESSION['username'] = $row['username'];
+		$_SESSION['logged'] = true;
 
 		header("Location: ../homepage/UtenteRegistrato.html");
 
 	} else {
-		echo "Errore: password errata!";
+		$_SESSION['badpassword'] = $password;
+		header("Location: index.php");
 	}
 
 	
