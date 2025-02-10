@@ -61,7 +61,7 @@
 		$_SESSION['username'] = $row['username'];
 		$_SESSION['logged'] = true;
 
-		header("Location: ../homepage/UtenteRegistrato.php");
+		header("Location: ../homepage/homepage.html");
 
 	} else {
 		$_SESSION['badpassword'] = true;
