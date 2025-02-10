@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+    background-image: url(../assets/background-assurdo.jpg);
+    background-size: cover;
+    background-position: center;
+    color:white;
+}
+
+main {
+    background-color:rgba(15, 9, 9, 0.5);
+    border-radius:5%;
+    width:500px;
+    padding:50px;
+   backdrop-filter: blur(1px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+main h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size:50px;
+}
+
+main .input-box {
+
+    position:relative;
+    width:100%;
+    height:50px;
+    margin: 40px 0;
+
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 2px solid rgba(245, 245, 245, 0.656);
+    outline:none;
+    border-radius:40px;
+    color:whitesmoke;
+    font-size: 16px;
+    padding: 30px;
+}
+
+.input-box input::placeholder {
+    color:whitesmoke;
+}
+
+.input-box i {
+
+    position:absolute;
+    right:20px;
+    top: 50%;
+    font-size:20px;
+}
+
+main .button input{
+    width:100%;
+    height:50px;
+    border-radius:40px;
+    background: whitesmoke;
+    color:rgba(15, 9, 9);
+    font-size:24px;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor:pointer;
+    font-weight: 400px;
+}
+
+main .button input:hover {
+    background-color: gray;
+    color:whitesmoke;
+}
+
+main p {
+    margin-top: 20px;
+    text-align: center;
+    font-size:25px;
+}
+
+main p a {
+    color:whitesmoke;
+    text-decoration:none;
+    font-weight: 700px;
+}
+
+main p a:hover {
+    text-decoration: underline;
+}
+
+
+
+#content-register {
+    display:none;
+}
+
+#message {
+        margin-top:5px;
+        height:150px;
+        width:400px;
+}
+
+#message i {
+    background-color: whitesmoke;
+    border-radius:50%;
+    position:relative;
+    margin-top:20px;
+    margin-left:47%;
+    font-size:200%;
+
+}
+
+.bx-error-circle {
+    color:red;
+}
+
+.bx-check-circle {
+    color:green;
+}
