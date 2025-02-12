@@ -18,7 +18,7 @@
             <a href="../gioco/index.html">Gioca</a>
             <a href="#">Shop</a>
             <a href="#">Classifica</a>
-            
+
         </nav>
     </header>
 
@@ -32,11 +32,11 @@
                         let userSpan = document.createElement("span");
                         userSpan.textContent = "Benvenuto, " + data.username + "!";
                         userSpan.style.marginRight = "10px";
-        
+
                         let logoutLink = document.createElement("a");
                         logoutLink.href = "logout.php";
                         logoutLink.textContent = "Esci";
-        
+
                         navBar.appendChild(userSpan);
                         navBar.appendChild(logoutLink);
                     } else {
@@ -48,13 +48,14 @@
                 })
                 .catch(error => console.error("Errore nel recupero della sessione:", error));
         });
-        </script>        
+    </script>
 
     <main>
-        <section class="trending-songs">
+        <h1 id="myH1">Home</h1>
+        <section class="trending">
             <h2>Canzoni di Tendenza</h2>
-            <div class="song-list">
-                <div class="song-card">
+            <div class="list">
+                <div class="card">
                     <img src="../images/billiejean.jpg" alt="Billie Jean">
                     <h4>Billie Jean</h4>
                     <p>Michael Jackson</p>
@@ -63,7 +64,7 @@
                         Il tuo browser non supporta l'elemento audio.
                     </audio>
                 </div>
-                <div class="song-card">
+                <div class="card">
                     <img src="../images/Thriller.jpg" alt="Thriller">
                     <h4>Thriller</h4>
                     <p>Michael Jackson</p>
@@ -72,7 +73,7 @@
                         Il tuo browser non supporta l'elemento audio.
                     </audio>
                 </div>
-                <div class="song-card">
+                <div class="card">
                     <img src="../images/offthewall.jpg" alt="Don't Stop 'Til You Get Enough">
                     <h4>Don't Stop 'Til You Get Enough</h4>
                     <p>Michael Jackson</p>
@@ -85,26 +86,26 @@
         </section>
 
 
-        <section class="trending-articles">
+        <section class="trending">
             <h2>Articoli di Tendenza</h2>
-            <div class="article-list">
-                <div class="article-card">
+            <div class="list">
+                <div class="card">
                     <img src="../images/article1.jpg" alt="Articolo 1">
                     <h4>Maglietta Michael Jackson</h4>
                     <p>25$</p>
-                    
+
                 </div>
-                <div class="article-card">
+                <div class="card">
                     <img src="../images/article2.jpg" alt="Articolo 2">
                     <h4>Tazza Michael Jackson</h4>
                     <p>10$</p>
                 </div>
-                <div class="article-card">
+                <div class="card">
                     <img src="../images/article3.jpg" alt="Articolo 3">
                     <h4>Poster Michael Jackson</h4>
                     <p>15$</p>
                 </div>
-                
+
             </div>
             <a href="#" class="read-more">Vai allo shop</a>
         </section>
@@ -121,9 +122,9 @@
             <a href="#" class="read-more">Vai alla classifica</a>
         </section>
 
-        
+
     </main>
-    
+
 
 
     <footer>

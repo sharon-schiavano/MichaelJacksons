@@ -1,9 +1,9 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-image: url('../images/mjbackground.jpg');
+    background-image: url('../images/background-assurdo.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -15,10 +15,13 @@ body {
 }
 
 header {
-    background-color: #333;
+    position: fixed;
+    background: #161a2d;
+    width: 100%;
     color: #fff;
     padding: 1rem;
     text-align: center;
+    z-index: 1000;
 }
 
 header nav {
@@ -38,8 +41,15 @@ header nav a {
 }
 
 header nav a:hover {
-    color: #bc2008;
+    color: #e5ff00;
     text-decoration:wavy;
+}
+
+#myH1{
+    text-align: center;
+    color: #bfb22b;
+    font-size: 3rem;
+    margin-top: 2em;
 }
 
 main {
@@ -48,23 +58,22 @@ main {
     max-width: 100%;
 }
 
-.trending-songs {
+.trending {
     padding: 2rem;
     margin-top: 5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-.trending-songs h2 {
+.trending h2 {
     text-align: center;
-    color: #fff;
+    color: #bfb22b;
     margin-bottom: 1rem;
     font-size: 2rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 
-.song-list {
+.list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -72,7 +81,7 @@ main {
     padding: 2rem;
 }
 
-.song-card {
+.card {
     background-color: rgba(255, 255, 255, 0.7); 
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -83,47 +92,35 @@ main {
     transition: transform 0.2s;
 }
 
-.song-card:hover {
+.card:hover {
     transform: scale(1.05);
 }
 
-.song-card img {
+.card img {
     width: 100%;
     height: 200px;
     object-fit:fill;
 }
 
-.song-card h4 {
+.card h4 {
     font-size: 1.2rem;
     margin: 0.5rem 0;
     color: #333;
 }
 
-.song-card p {
+.card p {
     font-size: 1rem;
     color: #555;
 }
 
-.song-card audio {
+.card audio {
     width: 90%;
     margin-top: 1rem;
     outline: none;
 }
 
 
-.trending-articles {
-    padding: 2rem;
-    margin-top: 5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-   
-}
 
-.trending-articles h2 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-}
 
 .article-list {
     display: flex;
@@ -133,58 +130,24 @@ main {
     padding: 2rem;
 }
 
-.article-card {
-    background-color: rgba(255, 255, 255, 0.7); 
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    width: 300px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.2s;
-}
-
-.article-card:hover {
-    transform: scale(1.05);
-}
-
-.article-card img {
-    width: 100%;
-    height: 200px;
-    object-fit:fill;
-}
-
-.article-card h4 {
-    font-size: 1.2rem;
-    margin: 0.5rem 0;
-    color: #333;
-}
-
-.article-card p {
-    font-size: 1rem;
-    color: #555;
-}
 
 .read-more {
-    display: inline-block;
-    text-align: center;
+    
     margin-top: 1rem;
     padding: 0.5rem 1rem;
-    background-color: #bc2008;
+    background-color: #bfb22b;
     color: #fff;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 7px;
     transition: background-color 0.3s;
 }
 
-.trending-articles {
-    margin-top: 4rem;
-    padding: 2rem;
-    background-color: rgba(255, 255, 255, 0.7); 
-    color: #fff;
-    text-align: center;
-   
+.read-more:hover{ 
+    background-color: #aca015;
+
 }
+
+
 
 .players {
     padding: 2rem;
@@ -229,7 +192,7 @@ main {
 
 
 footer {
-    background-color: #333;
+    background-color: #161a2d;
     color: #fff;
     text-align: center;
     padding: 10px;
