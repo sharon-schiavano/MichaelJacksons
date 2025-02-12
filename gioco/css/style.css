@@ -18,6 +18,7 @@ body {
   align-items: center;
   margin: 0;
   padding: 0 1%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 h3 {
@@ -34,6 +35,11 @@ h4 {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.logo{
+  margin-top: 6px;
+  margin-left:6px;
 }
 
 .sidebar {
@@ -57,6 +63,7 @@ h4 {
 .user-info {
   width: 100%;
   text-align: center;
+  margin-top: 60px;
   margin-bottom: 30px;
   display: flex;
   flex-direction: column;

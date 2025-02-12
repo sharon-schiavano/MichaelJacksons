@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing:border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 body {
@@ -10,7 +10,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100px;
-    background-image: url(../assets/background-assurdo.jpg);
+    background-image: url('../images/background-assurdo.jpg');
     background-size: cover;
     background-position: center;
     color:white;

@@ -21,6 +21,11 @@
     </span>
 
     <aside class="sidebar">
+
+      <div class="logo">
+        <img src="../images/MJLogo.jpeg" alt="Logo" width="65" height="55">
+    </div>
+
       <div class="user-info">
         <img src="./assets/user.png" alt="User" />
         <span id="username">Caricamento...</span>
@@ -64,7 +69,7 @@
               if (data.success) {
                   usernameSpan.textContent = data.username; // Mostra il nome utente
               } else {
-                  usernameSpan.innerHTML = `<a href="../login-register/mj_login.html">Non sei registrato. Registrati/Accedi</a>`;
+                  usernameSpan.innerHTML = `<a href="../login-register/index.php">Non sei registrato. Registrati/Accedi</a>`;
               }
           } catch (error) {
               console.error("Errore nel recupero dell'utente:", error);
