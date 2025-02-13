@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-image: url('../images/background-assurdo.jpg');
+    background-image: url('../assets/images/background/background-assurdo.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
