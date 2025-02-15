@@ -1,6 +1,6 @@
 <?php
 
-    require_once "config.php";
+    require_once "../php_in_comune/config.php";
 
 	session_start();
 
