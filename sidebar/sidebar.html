@@ -1,70 +1,74 @@
 <link rel="stylesheet" href="../sidebar/sidebar.css">
 
 <aside class="sidebar">
-    <div class="user-info">
-      <img src="../assets/images/sidebar/user.png" alt="User" />
-      <span id="username">Caricamento...</span>
-      <span id="mjc" style="display: none;">MJC : 0</span>
-      <a href="#" id="logout" class="logout-link" style="display: none;">
-        <span>Logout</span>
-      </a>
-    </div>
-    <ul class="sidebar-links">
-      <li>
-        <a href="../homepage/index.php">
-          <img src="../assets/images/sidebar/home.png" alt="Home" />
-          <span>HOME</span>
-        </a>
-      </li>
-      <li>
-        <a href="../gioco/index.php">
-          <img src="../assets/images/sidebar/gioca.png" alt="Gioco" />
-          <span>GIOCO</span>
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <img src="../assets/images/sidebar/shop.png" alt="Shop" />
-          <span>SHOP</span>
-        </a>
-      </li>
-      <li>
-        <a href="../classifica/index.php">
-          <img src="../assets/images/sidebar/classifica.png" alt="Classifica" />
-          <span>CLASSIFICA</span>
-        </a>
-      </li>
-    </ul>
-  </aside>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", async () => {
+  <div class="user-info">
+    <img src="../assets/images/sidebar/user.png" alt="User" />
+    <span id="username">Caricamento...</span>
+    <span id="mjc" style="display: none;">MJC : 0</span>
+    <a href="#" id="logout" class="logout-link" style="display: none;">
+      <span>Logout</span>
+    </a>
+  </div>
+
+
+  <ul class="sidebar-links">
+    <li>
+      <a href="../homepage/index.php">
+        <img src="../assets/images/sidebar/home.png" alt="Home" />
+        <span>HOME</span>
+      </a>
+    </li>
+    <li>
+      <a href="../gioco/index.php">
+        <img src="../assets/images/sidebar/gioca.png" alt="Gioco" />
+        <span>GIOCO</span>
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        <img src="../assets/images/sidebar/shop.png" alt="Shop" />
+        <span>SHOP</span>
+      </a>
+    </li>
+    <li>
+      <a href="../classifica/index.php">
+        <img src="../assets/images/sidebar/classifica.png" alt="Classifica" />
+        <span>CLASSIFICA</span>
+      </a>
+    </li>
+  </ul>
+
+</aside>
+
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
     try {
-        const response = await fetch("../php_in_comune/getUser.php");
-        const data = await response.json();
-  
-        const usernameSpan = document.getElementById("username");
-        const mjcSpan = document.getElementById("mjc");
-        const logoutButton = document.getElementById("logout");
-  
-        if (data.success) {
-            usernameSpan.textContent = data.username;
-            mjcSpan.style.display = "inline";
-            mjcSpan.textContent = "Valuta: " + data.valuta + "$";
-  
-            // Mostra il pulsante di logout
-            logoutButton.style.display = "block";
-            logoutButton.addEventListener("click", async () => {
-                await fetch("../php_in_comune/logout.php");
-                location.reload(); // Aggiorna la pagina dopo il logout
-            });
-        } else {
-          usernameSpan.innerHTML = '<a href="../login-register/index.php">Non sei registrato. Registrati/Accedi</a>';
-          logoutButton.style.display = "none"; // Nasconde il pulsante se l'utente non è loggato
-        }
+      const response = await fetch("../php_in_comune/getUser.php");
+      const data = await response.json();
+
+      const usernameSpan = document.getElementById("username");
+      const mjcSpan = document.getElementById("mjc");
+      const logoutButton = document.getElementById("logout");
+
+      if (data.success) {
+        usernameSpan.textContent = data.username;
+        mjcSpan.style.display = "inline";
+        mjcSpan.textContent = "Valuta: " + data.valuta + "$";
+
+        // Mostra il pulsante di logout
+        logoutButton.style.display = "block";
+        logoutButton.addEventListener("click", async () => {
+          await fetch("../php_in_comune/logout.php");
+          location.reload(); // Aggiorna la pagina dopo il logout
+        });
+      } else {
+        usernameSpan.innerHTML = '<a href="../login-register/index.php">Non sei registrato. Registrati/Accedi</a>';
+        logoutButton.style.display = "none"; // Nasconde il pulsante se l'utente non è loggato
+      }
     } catch (error) {
-        console.error("Errore nel recupero dell'utente:", error);
-        document.getElementById("username").innerHTML = '<a href="../login-register/index.php">"Errore nel login. Riprova."</a>';
+      console.error("Errore nel recupero dell'utente:", error);
+      document.getElementById("username").innerHTML = '<a href="../login-register/index.php">"Errore nel login. Riprova."</a>';
     }
   });
-  </script>
+</script>

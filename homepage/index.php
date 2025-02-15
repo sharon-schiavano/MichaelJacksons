@@ -10,9 +10,14 @@
 </head>
 
 <body>
-    
+
     <?php include '../sidebar/sidebar.html'; ?>
-  
+
+    <div class="search-box">
+
+        <input type="text" id="search" placeholder="Cerca..." onkeyup="searchMenu()">
+
+    </div>
 
     <main>
         <h1 id="myH1">Home</h1>
@@ -88,10 +93,28 @@
 
 
     </main>
-    
+
 
 
     <?php include '../footer/footer.html'; ?>
+
+    <script>
+        function searchMenu() {
+            let input = document.getElementById("search").value.toLowerCase();
+            let items = document.querySelectorAll(".card h4"); 
+
+            items.forEach(item => {
+                let text = item.textContent.toLowerCase();
+                let card = item.closest(".card"); 
+                if (text.includes(input)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
+
 </body>
 
 </html>

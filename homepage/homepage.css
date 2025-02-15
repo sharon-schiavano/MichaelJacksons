@@ -15,36 +15,17 @@ body {
     overflow-x: hidden;
 }
 
-header {
-    position: fixed;
-    background: #161a2d;
-    width: 100%;
-    color: #fff;
-    padding: 1rem;
-    text-align: center;
-    z-index: 1000;
+.search-box{
+    text-align: right;
+    margin: 1em;
 }
 
-header nav {
-    display: flex;
-    justify-content: center;
-    gap: 150px;
-}
-header nav img {
-    width: 60px;
-    height: 50px;
+#search{
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 1em;
 }
 
-header nav a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-header nav a:hover {
-    color: #e5ff00;
-    text-decoration:wavy;
-}
 
 #myH1{
     text-align: center;
@@ -65,7 +46,7 @@ main {
     text-align: center;
 }
 
-.trending h2 {
+.trending h2, .players h2{
     text-align: center;
     color: #bfb22b;
     margin-bottom: 1rem;
@@ -122,16 +103,6 @@ main {
 
 
 
-
-.article-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    padding: 2rem;
-}
-
-
 .read-more {
     
     margin-top: 1rem;
@@ -152,21 +123,16 @@ main {
 
 .players {
     padding: 2rem;
-    margin-top: 5rem;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 4rem;
+    margin-left: 4rem;
     padding: 2rem;
     background-color: rgba(255, 255, 255, 0.7); 
     color: #fff;
     text-align: center;
 }
 
-.players h2 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-}
 
 .player-list {
     list-style: none;
