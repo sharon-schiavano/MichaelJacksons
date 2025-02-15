@@ -1,6 +1,6 @@
 <?php
 
-    require_once "config.php";
+    require_once "../php_in_comune/config.php";
 
     function controlloInput($input) {       //vado a vedere se l'input ricevuto è uno username o una e-mail.
 
