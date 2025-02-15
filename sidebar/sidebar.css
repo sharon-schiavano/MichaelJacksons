@@ -1,0 +1,135 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 85px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #161a2d;
+  padding: 10px 20px;
+  transition: all 0.4s ease;
+}
+
+.sidebar:hover {
+  width: 200px;
+}
+
+.user-info {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-info a {
+  text-decoration:none;
+  color:yellow;
+}
+
+.user-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.user-info span {
+  font-size: 0;
+  color: #fff;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.sidebar:hover .user-info span {
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+.sidebar:hover .user-info img {
+  display: none;
+}
+
+.sidebar-links {
+  list-style: none;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.sidebar-links li {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar-links a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0;
+  font-weight: 600;
+  text-decoration: none;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.sidebar-links a img {
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar:hover .sidebar-links a {
+  font-size: 1rem;
+  gap: 10px;
+}
+
+.sidebar:hover .sidebar-links a img {
+  display: none;
+}
+
+.logout-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+  margin-top: 10px;
+  width: 100%;
+  justify-content: center;
+}
+
+.sidebar:hover .logout-link {
+  background-color:red;
+  color:white;
+}
+
+.sidebar:hover .logout-link:hover {
+  background-color: white;
+}
+
+.logout-link:hover span {
+  color:red;
+}
+
+.bxs-coin {
+  color:yellow;
+}
