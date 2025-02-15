@@ -24,7 +24,7 @@
 
 <head>
 
-    <title>MJ IS ALIVE: Area Riservata</title>
+    <title>MJStillAlive: Area Riservata</title>
     <meta charset="utf-8">
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
 
