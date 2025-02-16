@@ -67,11 +67,11 @@
 		$_SESSION['smooth_criminal'] = $row['smooth_criminal'];
 		$_SESSION['thriller'] = $row['thriller'];
 		$_SESSION['id'] = $row['id'];
-		$_SESSION['immagine_profilo'] = $_row['immagine_profilo'];
-		$_SESSION['unlocked_billiejean'] = $_row['unlocked_billiejean'];
-		$_SESSION['unlocked_thriller'] = $_row['unlocked_thriller'];
-		$_SESSION['unlocked_beatit'] = $_row['unlocked_beatit'];
-		$_SESSION['unlocked_smoothcriminal'] = $_row['unlocked_smoothcriminal'];
+		$_SESSION['immagine_profilo'] = $row['immagine_profilo'];
+		$_SESSION['unlocked_billiejean'] = $row['unlocked_billiejean'];
+        $_SESSION['unlocked_beatit'] = $row['unlocked_beatit'];
+        $_SESSION['unlocked_smoothcriminal'] = $row['unlocked_smoothcriminal'];
+		$_SESSION['unlocked_thriller'] = $row['unlocked_thriller'];
 		$_SESSION['logged'] = true;
 
 		header("Location: ../homepage/index.php");
