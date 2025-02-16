@@ -1,6 +1,15 @@
 <?php
 include '../php_in_comune/config.php';
 
+// Connessione al database
+$connection_string = "host=$host port=$port dbname=$dbname user=$user password=$password";
+$db = pg_connect($connection_string);
+
+if (!$db) {
+    echo json_encode(["success" => false, "error" => "Errore di connessione al database"]);
+    exit;
+}
+
 // Recupera il criterio di ordinamento dal parametro GET
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'mjc';
 
@@ -10,10 +19,21 @@ if (!in_array($sort, $allowedSortFields)) {
     $sort = 'mjc';
 }
 
-// Modifica la query per ordinare in base al criterio scelto
-$query = "SELECT id, username, $sort, immagine_profilo, data_iscrizione, valuta, billie_jean, beat_it, rock_with_you, smooth_criminal, thriller FROM utenti ORDER BY $sort DESC LIMIT 10";
-$stmt = $pdo->prepare($query);
-$stmt->execute();
-$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Query per ottenere la classifica
+$query = "SELECT id, username, $sort, immagine_profilo, data_iscrizione, valuta, billie_jean, beat_it, rock_with_you, smooth_criminal, thriller 
+          FROM utenti 
+          ORDER BY $sort DESC 
+          LIMIT 10";
+
+$result = pg_query($db, $query);
+
+if (!$result) {
+    echo json_encode(["success" => false, "error" => "Errore nell'esecuzione della query"]);
+    exit;
+}
+
+$users = pg_fetch_all($result);
+pg_close($db);
 
 echo json_encode($users);
+?>
