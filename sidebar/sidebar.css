@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+/* Selettore di tipo */
+body {
+  font-family: Arial, sans-serif;
+}
+
 .sidebar {
   position: fixed;
   top: 0;
@@ -16,6 +21,11 @@
   background: #161a2d;
   padding: 10px 20px;
   transition: all 0.4s ease;
+}
+
+/* Selettore ID */
+#profilepic {
+  border: 2px solid white;
 }
 
 .sidebar:hover {
@@ -31,9 +41,10 @@
   align-items: center;
 }
 
+/* Selettore di discendenza */
 .user-info a {
-  text-decoration:none;
-  color:yellow;
+  text-decoration: none;
+  color: yellow;
 }
 
 .user-info img {
@@ -68,7 +79,8 @@
   flex-grow: 1;
 }
 
-.sidebar-links li {
+/* Selettore child (>) */
+.sidebar-links > li {
   margin: 20px 0;
   display: flex;
   flex-direction: column;
@@ -86,6 +98,12 @@
   text-decoration: none;
   width: 100%;
   transition: all 0.3s ease;
+}
+
+/* Selettore di unione */
+.sidebar-links a, .logout-link {
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .sidebar-links a img {
@@ -118,8 +136,8 @@
 }
 
 .sidebar:hover .logout-link {
-  background-color:red;
-  color:white;
+  background-color: red;
+  color: white;
 }
 
 .sidebar:hover .logout-link:hover {
@@ -127,9 +145,25 @@
 }
 
 .logout-link:hover span {
-  color:red;
+  color: red;
+}
+
+/* Selettore pseudo-elemento */
+.sidebar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar:hover::before {
+  opacity: 1;
 }
 
 .bxs-coin {
-  color:yellow;
+  color: yellow;
 }
