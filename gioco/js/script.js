@@ -47,7 +47,7 @@ const volumeControl = document.getElementById('volume');
 mainSong.volume = volumeControl.value;
 const countdownElement = document.getElementById("countdown");
 const message = document.getElementById("risultato");
-const wowSound = new Audio("../assets/audio/Hee hee.mp3");
+const wowSound = new Audio("../assets/audio/great.mp3");
 wowSound.volume = volumeControl.value;
 const awesomeSound = new Audio("../assets/audio/awesome.mp3");
 awesomeSound.volume = volumeControl.value;
@@ -56,6 +56,7 @@ amazingSound.volume = volumeControl.value;
 countdownElement.classList.add("hidden");
 canzoneSelezionata = -1;
 connesso = 0;
+isCountdownActive = null;
 
 const countdownNumbers = ["Pronto?", "3", "2", "1", "VIA!", ""];
 let indice = 0;
@@ -134,6 +135,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+//sblocca canzoni
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const response = await fetch("../php_in_comune/getUser.php");
+    const data = await response.json();
+
+    if (data.success) {
+      if (data.unlocked_billiejean == 't') playButton1.style.display = "block";
+      if (data.unlocked_beatit == 't') playButton2.style.display = "block";
+      if (data.unlocked_smoothcriminal == 't') playButton4.style.display = "block";
+      if (data.unlocked_thriller == 't') playButton5.style.display = "block";
+    }
+
+  } catch (error) {
+    console.error("Errore nel recupero dell'utente:", error);
+  }
+});
 
 
 async function aggiornaPunteggio(canzone, punteggio) {
@@ -286,15 +304,18 @@ function gameStart(num) {
   startCountdown(() => {
     // Questo codice viene eseguito solo dopo il countdown
     if (num == 2) {
-      mainSong.src = "../assets/audio/beat-it.mp3";
+      mainSong.src = "../assets/audio/Beat It - Michael Jackson (Lyrics).mp3";
     } else if (num == 3) {
-      mainSong.src = "../assets/audio/rock-with-you.mp3";
+      mainSong.src = "../assets/audio/Michael Jackson - Rock With You [Lyrics].mp3";
     } else if (num == 4) {
-      mainSong.src = "../assets/audio/smooth-criminal.mp3";
+      mainSong.src = "../assets/audio/Michael Jackson - Smooth Criminal (Single Version) HD.mp3";
     } else if (num == 5) {
-      mainSong.src = "../assets/audio/thriller.mp3";
-    }
-    
+      mainSong.src = "../assets/audio/Michael Jackson - Thriller (Lyrics).mp3";
+    }/*else if (num == 6) {
+      mainSong.src = "./assets/Michael Jackson - Chicago (Lyrics).mp3";
+    }else if (num == 7) {
+      mainSong.src = "./assets/Michael Jackson - P.Y.T. (Pretty Young Thing) (Lyrics).mp3";
+    }*/
     mainSong.play();
     arrowDraw();
     setInterval(draw, 1);
