@@ -24,13 +24,11 @@ nav .logout {
   margin-bottom: 1rem; /* Aggiungi un po' di spazio dal bordo */
 }
 
-h3 {
-  margin-top: 0;
+/* unione di selettori*/
+h3, h4 {
+  font-family: var(--font-family);
 }
 
-h4 {
-  margin: 0;
-}
 
 section {
   position: relative;
@@ -52,6 +50,10 @@ button {
   padding: 10px 25px;
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.combo > p {
+  text-transform: uppercase;
 }
 
 button:hover {
