@@ -14,19 +14,36 @@ if (!isset($_POST['id']) || !isset($_POST['incremento'])) {
     exit;
 }
 
-$pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// Connessione al database
+$connection_string = "host=$host port=$port dbname=$dbname user=$user password=$password";
+$db = pg_connect($connection_string);
+
+if (!$db) {
+    echo json_encode(["success" => false, "error" => "Errore di connessione al database"]);
+    exit;
+}
 
 $id = $_POST['id'];
 $incremento = $_POST['incremento'];
 
-$sql = "UPDATE utenti SET mjc = mjc + :incremento WHERE id = :id";
-$stmt = $pdo->prepare($sql);
+// Query per aggiornare il campo mjc
+$sql = "UPDATE utenti SET mjc = mjc + $1 WHERE id = $2";
+$result = pg_query_params($db, $sql, [$incremento, $id]);
 
-if (!$stmt->execute(['incremento' => $incremento, 'id' => $id])) {
+if (!$result) {
     echo json_encode(["success" => false, "error" => "Errore nell'esecuzione della query"]);
     exit;
 }
+
+// Query per aggiornare la valuta in sessione
+$sql = "SELECT valuta FROM utenti WHERE id = $1";
+$result = pg_query_params($db, $sql, [$id]);
+
+if ($row = pg_fetch_assoc($result)) {
+    $_SESSION['valuta'] = $row['valuta'];
+}
+
+pg_close($db);
 
 echo json_encode(["success" => true]);
 ?>
