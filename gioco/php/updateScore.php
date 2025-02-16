@@ -13,8 +13,14 @@ if (!isset($_POST['id']) || !isset($_POST['canzoneSelezionata']) || !isset($_POS
     exit;
 }
 
-$pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// Connessione al database
+$connection_string = "host=$host port=$port dbname=$dbname user=$user password=$password";
+$db = pg_connect($connection_string);
+
+if (!$db) {
+    echo json_encode(["success" => false, "error" => "Errore di connessione al database"]);
+    exit;
+}
 
 $id = $_POST['id'];
 $canzoneSelezionata = $_POST['canzoneSelezionata'];
@@ -35,10 +41,16 @@ if (!isset($campiCanzoni[$canzoneSelezionata])) {
 
 $campoDB = $campiCanzoni[$canzoneSelezionata];
 
-$query = "SELECT $campoDB FROM utenti WHERE id = :id";
-$stmt = $pdo->prepare($query);
-$stmt->execute(['id' => $id]);
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
+// Recupero del punteggio attuale
+$query = "SELECT $campoDB FROM utenti WHERE id = $1";
+$result = pg_query_params($db, $query, [$id]);
+
+if (!$result) {
+    echo json_encode(["success" => false, "error" => "Errore nella query"]);
+    exit;
+}
+
+$row = pg_fetch_assoc($result);
 
 if (!$row) {
     echo json_encode(["success" => false, "error" => "Utente non trovato"]);
@@ -48,12 +60,18 @@ if (!$row) {
 $scoreAttuale = $row[$campoDB];
 
 if ($score > $scoreAttuale) {
-    $updateQuery = "UPDATE utenti SET $campoDB = :score WHERE id = :id";
-    $updateStmt = $pdo->prepare($updateQuery);
-    $updateStmt->execute(['score' => $score, 'id' => $id]);
+    $updateQuery = "UPDATE utenti SET $campoDB = $1 WHERE id = $2";
+    $updateResult = pg_query_params($db, $updateQuery, [$score, $id]);
+
+    if (!$updateResult) {
+        echo json_encode(["success" => false, "error" => "Errore nell'aggiornamento del punteggio"]);
+        exit;
+    }
 
     echo json_encode(["success" => true, "message" => "Punteggio aggiornato con successo!"]);
 } else {
     echo json_encode(["success" => true, "message" => "Nessun aggiornamento necessario"]);
 }
+
+pg_close($db);
 ?>
