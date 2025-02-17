@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     const sortCriteriaDropdown = document.getElementById("sortCriteria");
     const leaderboard = document.getElementById("leaderboard");
@@ -31,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         userDiv.innerHTML = `
                         <div style="display: flex; align-items: center;">
                             <img src="${utente.immagine_profilo}" class="profilo">
-                            <span>${utente.username} - ${utente[sortCriteria]} MJC</span>
+                            <span> ${index+1}. ${utente.username} - ${utente[sortCriteria]} MJC</span>
                         </div>
                         <div class="tendina"></div>
                     `; 
