@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     userDiv.innerHTML = `
                         <div style="display: flex; align-items: center;">
                             <img src="${utente.immagine_profilo}" class="profilo">
-                            <span>${utente.username} - ${utente[sortCriteria]} punti</span>
+                            <span>${index+1}. ${utente.username} - ${utente[sortCriteria]} punti</span>
                         </div>
                         <div class="tendina"></div>
                     `;
@@ -82,4 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Carica la classifica iniziale con il criterio predefinito
     loadLeaderboard();
+
+    
 });
+
