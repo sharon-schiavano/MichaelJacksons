@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../assets/images/background/background-assurdo.jpg);
+    background-size: cover;
+    background-position: center;
+    color:white;
+}
+
+main {
+    background-color:rgba(15, 9, 9, 0.5);
+    border-radius:5%;
+    width:500px;
+    padding:50px;
+    backdrop-filter: blur(1px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+figure img {
+    display:block;
+    margin: 0 auto;
+}
+
+
+main h1 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size:50px;
+}
+
+main .input-box {
+
+    position:relative;
+    width:100%;
+    height:50px;
+    margin: 50px 0;
+
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 2px solid rgba(245, 245, 245, 0.656);
+    outline:none;
+    border-radius:40px;
+    color:whitesmoke;
+    font-size: 16px;
+    padding: 30px;
+}
+
+.input-box input::placeholder {
+    color:whitesmoke;
+    font-style:italic;
+}
+
+.input-box i {
+
+    position:absolute;
+    right:20px;
+    top: 50%;
+    font-size:20px;
+}
+
+main .button input{
+    width:100%;
+    height:50px;
+    border-radius:40px;
+    background: whitesmoke;
+    color:rgba(15, 9, 9);
+    border: none;
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor:pointer;
+    font-weight: 500;
+    transition: background-color 0.4s, color 0.4s;
+}
+
+main .button input:hover {
+    background-color: gray;
+    color:whitesmoke;
+}
+
+main p {
+    margin-top: 20px;
+    text-align: center;
+}
+
+main p, main .button input{
+    font-size:24px;
+}
+
+main p a {
+    color:whitesmoke;
+    text-decoration:none;
+    font-weight: 700;
+}
+
+main p a:hover {
+    text-decoration: underline;
+}
+
+
+
+#content-register {
+    display:none;
+}
+
+#message{
+        margin-top:15px;
+        height:150px;
+        width:400px;
+}
+
+.message-error {
+    background-color: rgba(175, 5, 5, 0.5);
+}
+
+.message-correct {
+    background-color: rgba(5, 175, 22, 0.5);
+}
+
+.message-correct, .message-error {
+    padding-bottom:10px;
+}
+
+
+#message i {
+    background-color: whitesmoke;
+    border-radius:50%;
+    position:relative;
+    margin-top:20px;
+    margin-left:47%;
+    font-size:200%;
+
+}
+
+.bx-error-circle {
+    color:red;
+}
+
+.bx-check-circle {
+    color:green;
+}
+
