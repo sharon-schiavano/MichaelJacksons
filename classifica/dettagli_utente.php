@@ -1,10 +1,6 @@
 <?php
 include '../php_in_comune/config.php';
 
-// Connessione al database
-$connection_string = "host=$host port=$port dbname=$dbname user=$user password=$password";
-$db = pg_connect($connection_string);
-
 if (!$db) {
     echo json_encode(["success" => false, "error" => "Errore di connessione al database"]);
     exit;
