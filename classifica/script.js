@@ -1,3 +1,21 @@
+let user = "";
+
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+      const response = await fetch("../php_in_comune/getUser.php");
+      const data = await response.json();
+
+      if (data.success) {
+        user = data.username;
+      } /*else {
+        user.style.display = "none";
+      }*/
+    } catch (error) {
+      console.error("Errore nel recupero dell'utente:", error);
+    }
+  });
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const sortCriteriaDropdown = document.getElementById("sortCriteria");
@@ -14,6 +32,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Creazione del rettangolo utente
                     const userDiv = document.createElement("div");
                     userDiv.classList.add("utente");
+
+                     //l'utente loggato ha il nome evidenziato in verde
+                    if (utente.username === user) {
+
+                        userDiv.style.color = "green";
+                        userDiv.style.fontWeight = "bold";
+                        userDiv.style.fontStyle = "italic";
+
+                    }
 
                     // Assegna colore ai primi tre
                     if (index === 0) userDiv.style.backgroundColor = "gold";
@@ -85,4 +112,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
     
 });
-
