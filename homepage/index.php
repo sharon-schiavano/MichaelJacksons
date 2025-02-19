@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,71 +14,90 @@
 </head>
 
 <body>
-
     <?php include '../sidebar/sidebar.html'; ?>
 
     <div class="search-box">
-
         <input type="text" id="search" placeholder="Cerca..." onkeyup="searchMenu()">
-
     </div>
 
     <main>
         <h1 id="myH1">Home</h1>
+
+        <?php if (isset($_SESSION['logged']) && $_SESSION['logged'] === true): ?>
+            <section class="profile">
+                <h2>Il mio profilo</h2>
+                <div class="drag-drop-area" id="drop-area">
+                    <?php
+                    if (isset($_SESSION['id'])) {
+                        require_once "../php_in_comune/config.php";
+                        $user_id = $_SESSION['id'];
+
+                        $query = "SELECT immagine_profilo FROM utenti WHERE id = $1";
+                        $result = pg_prepare($db, "get_profile_image", $query);
+                        $result = pg_execute($db, "get_profile_image", array($user_id));
+
+                        if ($row = pg_fetch_assoc($result)) {
+                            $imagePath = $row['immagine_profilo'];
+                            $profileImage = (!empty($imagePath) && file_exists($_SERVER['DOCUMENT_ROOT'] . $imagePath))
+                                ? $imagePath
+                                : '../assets/images/sidebar/user.png';
+                            echo "<img src='$profileImage' id='profileImage' class='user-image'>";
+                        }
+                    }
+                    ?>
+                    <form action="upload.php" method="POST" enctype="multipart/form-data" id="uploadForm">
+                        <input type="file" id="input-file" accept="image/*" name="image" hidden>
+                        <div id="img-view">
+                            <p>Trascina o clicca qui per cambiare la foto</p>
+                        </div>
+                    </form>
+                </div>
+                <button type="submit" id="submitButton" form="uploadForm">Carica immagine</button>
+                <button type="button" id="deleteButton" class="delete-button">Elimina immagine</button>
+            </section>
+        <?php endif; ?>
+
         <section class="trending">
             <h2>Canzoni di Tendenza</h2>
             <div class="list">
-                <div class="card">
-                    <img src="../assets/images/songs/billiejean.jpg" alt="Billie Jean">
-                    <h4>Billie Jean</h4>
-                    <p>Michael Jackson</p>
-                    <audio controls>
-                        <source src="../assets/audio/billie-jean.mp3" type="audio/mpeg">
-                        Il tuo browser non supporta l'elemento audio.
-                    </audio>
-                </div>
-                <div class="card">
-                    <img src="../assets/images/songs/Thriller.jpg" alt="Thriller">
-                    <h4>Thriller</h4>
-                    <p>Michael Jackson</p>
-                    <audio controls>
-                        <source src="../assets/audio/thriller.mp3" type="audio/mpeg">
-                        Il tuo browser non supporta l'elemento audio.
-                    </audio>
-                </div>
-                <div class="card">
-                    <img src="../assets/images/songs/offthewall.jpg" alt="Don't Stop 'Til You Get Enough">
-                    <h4>Don't Stop 'Til You Get Enough</h4>
-                    <p>Michael Jackson</p>
-                    <audio controls>
-                        <source src="../assets/audio/dont-stop-til-you-get-enough.mp3" type="audio/mpeg">
-                        Il tuo browser non supporta l'elemento audio.
-                    </audio>
-                </div>
+                <?php
+                $songs = [
+                    ["billiejean.jpg", "Billie Jean", "Michael Jackson", "billie-jean.mp3"],
+                    ["Thriller.jpg", "Thriller", "Michael Jackson", "thriller.mp3"],
+                    ["offthewall.jpg", "Don't Stop 'Til You Get Enough", "Michael Jackson", "dont-stop-til-you-get-enough.mp3"]
+                ];
+                foreach ($songs as $song) {
+                    echo "<div class='card'>
+                            <img src='../assets/images/songs/$song[0]' alt='$song[1]'>
+                            <h4>$song[1]</h4>
+                            <p>$song[2]</p>
+                            <audio controls>
+                                <source src='../assets/audio/$song[3]' type='audio/mpeg'>
+                                Il tuo browser non supporta l'elemento audio.
+                            </audio>
+                          </div>";
+                }
+                ?>
             </div>
         </section>
-
 
         <section class="trending">
             <h2>Articoli di Tendenza</h2>
             <div class="list">
-                <div class="card">
-                    <img src="../images/article1.jpg" alt="Articolo 1">
-                    <h4>Maglietta Michael Jackson</h4>
-                    <p>25$</p>
-
-                </div>
-                <div class="card">
-                    <img src="../images/article2.jpg" alt="Articolo 2">
-                    <h4>Tazza Michael Jackson</h4>
-                    <p>10$</p>
-                </div>
-                <div class="card">
-                    <img src="../images/article3.jpg" alt="Articolo 3">
-                    <h4>Poster Michael Jackson</h4>
-                    <p>15$</p>
-                </div>
-
+                <?php
+                $articles = [
+                    ["article1.jpg", "Maglietta Michael Jackson", "25$"],
+                    ["article2.jpg", "Tazza Michael Jackson", "10$"],
+                    ["article3.jpg", "Poster Michael Jackson", "15$"]
+                ];
+                foreach ($articles as $article) {
+                    echo "<div class='card'>
+                            <img src='../images/$article[0]' alt='$article[1]'>
+                            <h4>$article[1]</h4>
+                            <p>$article[2]</p>
+                          </div>";
+                }
+                ?>
             </div>
             <a href="#" class="read-more">Vai allo shop</a>
         </section>
@@ -82,39 +105,39 @@
         <section class="players">
             <h2>Migliori giocatori del mese</h2>
             <ul class="player-list">
-                <li>1. Michael Jordan</li>
-                <li>2. LeBron James</li>
-                <li>3. Kobe Bryant</li>
-                <li>4. Larry Bird</li>
-                <li>5. Shaquille O'Neal</li>
-            </ul>
-            <a href="#" class="read-more">Vai alla classifica</a>
-        </section>
+                <?php
+                include '../php_in_comune/config.php';
 
+                if ($db) {
+                    $query = "SELECT username FROM utenti ORDER BY mjc DESC LIMIT 5";
+                    $result = pg_query($db, $query);
+
+                    if ($result) {
+                        $players = pg_fetch_all($result);
+                        if ($players) {
+                            foreach ($players as $index => $player) {
+                                echo "<li>" . ($index + 1) . ". " . htmlspecialchars($player['username']) . "</li>";
+                            }
+                        } else {
+                            echo "<li>Nessun giocatore disponibile</li>";
+                        }
+                    } else {
+                        echo "<li>Errore nel caricamento della classifica</li>";
+                    }
+                    pg_close($db);
+                } else {
+                    echo "<li>Errore di connessione al database</li>";
+                }
+                ?>
+            </ul>
+            <a href="../classifica/index.php" class="read-more">Vai alla classifica</a>
+        </section>
 
     </main>
 
-
-
     <?php include '../footer/footer.html'; ?>
 
-    <script>
-        function searchMenu() {
-            let input = document.getElementById("search").value.toLowerCase();
-            let items = document.querySelectorAll(".card h4"); 
-
-            items.forEach(item => {
-                let text = item.textContent.toLowerCase();
-                let card = item.closest(".card"); 
-                if (text.includes(input)) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
-                }
-            });
-        }
-    </script>
-
+    <script src="script.js"></script>
 </body>
 
 </html>
