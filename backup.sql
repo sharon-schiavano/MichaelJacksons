@@ -51,7 +51,7 @@ CREATE TABLE public.utenti (
     email character varying(100) NOT NULL,
     password text NOT NULL,
     mjc integer DEFAULT 0,
-    immagine_profilo character varying(255) DEFAULT '../uploads/default_profile.png'::character varying,
+    immagine_profilo character varying(255) DEFAULT '../uploads/default.jpg'::character varying,
     data_iscrizione character varying(10) DEFAULT to_char((CURRENT_DATE)::timestamp with time zone, 'DD/MM/YYYY'::text),
     valuta integer DEFAULT 0,
     billie_jean integer DEFAULT 0,
