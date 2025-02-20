@@ -235,12 +235,25 @@ main {
     padding: 0.5rem 0;
     color: #333;
     font-weight: bold;
+    padding-left: 0.5rem;
+
 }
 
 .player-list li:nth-child(odd) {
     background-color: #ececec;
-    padding-left: 0.5rem;
-    border-radius: 5px;
+    
+}
+
+.player-list li:nth-child(1) {
+    background-color: gold;
+}
+
+.player-list li:nth-child(2) {
+    background-color: #888888;
+}
+
+.player-list li:nth-child(3) {
+    background-color: #CD7F32;
 }
 
 
