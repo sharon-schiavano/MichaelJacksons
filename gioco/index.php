@@ -71,7 +71,7 @@
       <img id="up" src="../assets/images/game/staticUp.png">
       <img id="right" src="../assets/images/game/staticRight.png">
     </div>
-    <audio id="mainSong" src="../assets/audio/Michael Jackson - Billie Jean (Official Video).mp3"></audio>
+    <audio id="mainSong" src="../assets/audio/rock-with-you.mp3"></audio>
     <audio id="endApplause" src="../assets/audio/applause.mp3"></audio>
     <?php include '../footer/footer.html'; ?>
   </body>
