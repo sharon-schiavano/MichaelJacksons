@@ -47,11 +47,11 @@ const volumeControl = document.getElementById('volume');
 mainSong.volume = volumeControl.value;
 const countdownElement = document.getElementById("countdown");
 const message = document.getElementById("risultato");
-const wowSound = new Audio("../assets/audio/great.mp3");
+const wowSound = new Audio("../assets/audio/Hee hee.mp3");
 wowSound.volume = volumeControl.value;
-const awesomeSound = new Audio("../assets/audio/awesome.mp3");
+const awesomeSound = new Audio("../assets/audio/baby.mp3");
 awesomeSound.volume = volumeControl.value;
-const amazingSound = new Audio("../assets/audio/amazing.mp3");
+const amazingSound = new Audio("../assets/audio/dapdap.mp3");
 amazingSound.volume = volumeControl.value;
 countdownElement.classList.add("hidden");
 canzoneSelezionata = -1;
@@ -491,7 +491,7 @@ function clearNumbers() {
   maxScore = 0;
   scoreDisplay.innerHTML = "Score: " + `${score}`;
   combo = 0;
-  comboText.textContent = "combo";
+  comboText.textContent = "COMBO";
   comboCount.innerHTML = "";
 }
 
