@@ -77,7 +77,7 @@ const deleteButton = document.getElementById('deleteButton');
 
 deleteButton.addEventListener("click", function() {
 // Recupera l'immagine di default
-const defaultImagePath = '../assets/images/sidebar/default-profile.png';
+const defaultImagePath = '../uploads/default.jpg';
 
 // Aggiorna l'immagine del profilo con quella di default
 const profileImage = document.getElementById('profileImage');
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     userElement.innerHTML = `
                         <span class="rank">#${index + 1}</span>
-                        <img src="${user.immagine_profilo || 'default-avatar.png'}" alt="Immagine Profilo" class="profile-pic">
+                        <img src="${user.immagine_profilo || 'default.jpg'}" alt="Immagine Profilo" class="profile-pic">
                         <span class="username">${user.username}</span>
                         <span class="score">${user[sort]}</span>
                     `;
@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showUserDetails(userId) {
-        fetch(`dettagli-utente.php?id=${userId}`)
+        fetch(`dettagli_utente.php?id=${userId}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success === false) {

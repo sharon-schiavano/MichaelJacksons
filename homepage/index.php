@@ -15,17 +15,23 @@ session_start();
 
 <body>
     <?php include '../sidebar/sidebar.html'; ?>
-
+<!--
     <div class="search-box">
         <input type="text" id="search" placeholder="Cerca..." onkeyup="searchMenu()">
     </div>
+-->
+    <header>
+        <figure>
+            <img src="../assets/images/logo/white-logo.png" alt="logo">
+        </figure>
+    </header>
 
     <main>
-        <h1 id="myH1">Home</h1>
+        
 
         <?php if (isset($_SESSION['logged']) && $_SESSION['logged'] === true): ?>
             <section class="profile">
-                <h2>Il mio profilo</h2>
+                <h2>Bentornato, <?php echo $_SESSION['username'] ?>!</h2>
                 <div class="drag-drop-area" id="drop-area">
                     <?php
                     if (isset($_SESSION['id'])) {
@@ -40,7 +46,7 @@ session_start();
                             $imagePath = $row['immagine_profilo'];
                             $profileImage = (!empty($imagePath) && file_exists($_SERVER['DOCUMENT_ROOT'] . $imagePath))
                                 ? $imagePath
-                                : '../assets/images/sidebar/user.png';
+                                : '../uploads/default.jpg';
                             echo "<img src='$profileImage' id='profileImage' class='user-image'>";
                         }
                     }
@@ -138,6 +144,7 @@ session_start();
     <?php include '../footer/footer.html'; ?>
 
     <script src="script.js"></script>
+
 </body>
 
 </html>

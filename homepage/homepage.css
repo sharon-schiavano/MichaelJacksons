@@ -3,12 +3,6 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-image: url('../assets/images/background/background-assurdo.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: #211111;
-    background-attachment: fixed;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -27,22 +21,42 @@ body {
     border: 1px solid #888;
 }
 
-#myH1 {
+
+
+header {
     text-align: center;
     color: #bfb22b;
     font-size: 3rem;
-    margin-top: 2em;
+    background-image: url('../assets/images/background/mjbackground.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height:250px;
+}
+
+header figure {
+    backdrop-filter: blur(2px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    height:100%;
+    width:15%;
+    margin:0 auto;
 }
 
 main {
     flex: 1;
     padding: 2rem;
     max-width: 100%;
+    background-image: url(../assets/images/background/background-assurdo.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .profile h2 {
     text-align: center;
-    color: #888242;
+    color: #bfb22b;
     margin-top: 2em;
     margin-bottom: 1rem;
     font-size: 2rem;
@@ -124,13 +138,15 @@ main {
     background-color: #c82333;
 }
 
-.trending, .players {
+.profile, .trending, .players {
     padding: 2rem;
-    margin-top: 5rem;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width:fit-content;
+    margin:0 auto;
+    margin-top: 5rem;
 }
 
 .trending h2, .players h2 {
@@ -227,10 +243,4 @@ main {
     border-radius: 5px;
 }
 
-footer {
-    background-color: #161a2d;
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-    width: 100%;
-}
+

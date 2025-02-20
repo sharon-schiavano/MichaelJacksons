@@ -17,13 +17,13 @@ if (isset($_SESSION['id'])) {
         
         // Se esiste un'immagine e non è quella di default, eliminala dal filesystem
         if (!empty($current_image) && file_exists($_SERVER['DOCUMENT_ROOT'] . $current_image) && 
-            strpos($current_image, 'default-profile.png') === false) {
+            strpos($current_image, 'default.jpg') === false) {
             unlink($_SERVER['DOCUMENT_ROOT'] . $current_image);
         }
     }
     
     // Aggiorna il database con il percorso dell'immagine di default
-    $default_image = '../assets/images/sidebar/default-profile.png';
+    $default_image = '../uploads/default.jpg';
     $query = "UPDATE utenti SET immagine_profilo = $1 WHERE id = $2";
     $result = pg_prepare($db, "update_image", $query);
     $result = pg_execute($db, "update_image", array($default_image, $user_id));
