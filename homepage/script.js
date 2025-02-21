@@ -98,6 +98,7 @@ headers: {
 .then(response => response.json())
 .then(data => {
 if (data.success) {
+    
     alert('Immagine eliminata con successo');
 } else {
     alert('Errore durante l\'eliminazione dell\'immagine');
@@ -129,6 +130,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 data.forEach((user, index) => {
                     const userElement = document.createElement("div");
                     userElement.classList.add("leaderboard-entry");
+
+                    
 
                     userElement.innerHTML = `
                         <span class="rank">#${index + 1}</span>

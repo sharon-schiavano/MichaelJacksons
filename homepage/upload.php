@@ -58,9 +58,8 @@ if(!$ret){
     exit("DB update error: " . pg_last_error($db));
 }
 
-echo "Profile image updated successfully!";
+$_SESSION['immagine_profilo'] = $image_path;
+header("Location: ../homepage/index.php");
+pg_close($db);
 
 ?>
-
-
-

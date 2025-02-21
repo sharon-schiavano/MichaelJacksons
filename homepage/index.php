@@ -105,7 +105,7 @@ session_start();
                 }
                 ?>
             </div>
-            <a href="#" class="read-more">Vai allo shop</a>
+            <a href="../shop/index.php" class="read-more">Vai allo shop</a>
         </section>
 
         <section class="players">

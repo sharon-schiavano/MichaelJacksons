@@ -23,7 +23,7 @@ if (isset($_SESSION['id'])) {
     }
     
     // Aggiorna il database con il percorso dell'immagine di default
-    $default_image = '../uploads/default.jpg';
+    $default_image = '../uploads/profile-images/default.jpg';
     $query = "UPDATE utenti SET immagine_profilo = $1 WHERE id = $2";
     $result = pg_prepare($db, "update_image", $query);
     $result = pg_execute($db, "update_image", array($default_image, $user_id));
