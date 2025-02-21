@@ -1,24 +1,45 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     updateCartCount();
     loadCart();
-    loadUserBalance(); // Aggiorna il saldo MJC al caricamento della pagina
+    checkUserStatus(); // Controlla lo stato dell'utente al caricamento della pagina
 
     let cartIcon = document.getElementById("cart-icon");
-    if (cartIcon) {
+    let cartMenu = document.getElementById("cart-menu");
+
+    if (cartIcon && cartMenu) {
         cartIcon.addEventListener("click", toggleCart);
+    } else {
+        console.error("❌ Errore: Elementi cart-icon o cart-menu non trovati nel DOM.");
     }
 });
 
-function toggleCart() {
-    let cartMenu = document.getElementById("cart-menu");
-    cartMenu.classList.toggle("hidden");
-    cartMenu.classList.toggle("show");
+// Controlla se l'utente è loggato e aggiorna la sessione nel frontend
+function checkUserStatus() {
+    fetch("../php_in_comune/getUser.php")
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.body.dataset.loggedIn = "true";
+                document.body.dataset.mjc = data.valuta; // 🔥 Salva il saldo MJC nell'HTML
+            } else {
+                document.body.dataset.loggedIn = "false";
+                localStorage.removeItem("cart"); // 🔥 Se l'utente è sloggato, svuota il carrello
+                updateCartCount();
+                loadCart();
+            }
+        })
+        .catch(error => console.error("Errore nel controllo utente:", error));
 }
 
-//  GESTIONE CARRELLO (SOLO per i prodotti in EURO)
+//Funzione per verificare se l'utente è loggato
+function isUserLoggedIn() {
+    return document.body.dataset.loggedIn === "true";
+}
+
+// Aggiunta al carrello SOLO se l'utente è loggato
 function addToCart(id, name, price) {
     if (!isUserLoggedIn()) {
-        alert("❌ Devi essere loggato per aggiungere prodotti al carrello!");
+        alert("❌ Devi essere loggato per aggiungere prodotti al carrello.");
         return;
     }
 
@@ -36,11 +57,7 @@ function addToCart(id, name, price) {
     loadCart();
 }
 
-// Funzione per verificare se l'utente è loggato
-function isUserLoggedIn() {
-    return document.body.dataset.loggedIn === "true"; // Verifica se il body ha un dataset con `loggedIn`
-}
-
+//Rimuove un prodotto dal carrello
 function removeFromCart(id) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     cart = cart.filter(p => p.id !== id);
@@ -49,6 +66,7 @@ function removeFromCart(id) {
     loadCart();
 }
 
+// Aggiorna il numero di prodotti nel carrello
 function updateCartCount() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     let count = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -58,6 +76,7 @@ function updateCartCount() {
     }
 }
 
+//  Carica il carrello e mostra i prodotti
 function loadCart() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     let cartItems = document.getElementById("cart-items");
@@ -82,23 +101,60 @@ function loadCart() {
     }
 }
 
-function purchaseSong(songColumn, price) {
-    if (!confirm(`Vuoi acquistare ${songColumn.replace(/_/g, ' ')} per ${price} MJC?`)) {
+// Toggle del carrello (APRIRE/CHIUDERE)
+function toggleCart() {
+    let cartMenu = document.getElementById("cart-menu");
+
+    if (!cartMenu) {
+        console.error("❌ Errore: Elemento #cart-menu non trovato.");
+        return;
+    }
+
+    //  Se il carrello ha la classe 'hidden', la rimuove e lo mostra
+    if (cartMenu.classList.contains("hidden")) {
+        cartMenu.classList.remove("hidden");
+    }
+
+    // Alterna la classe "show" per aprire o chiudere il carrello
+    cartMenu.classList.toggle("show");
+
+    // Se il carrello viene chiuso, riaggiunge la classe 'hidden' per nasconderlo
+    if (!cartMenu.classList.contains("show")) {
+        cartMenu.classList.add("hidden");
+    }
+}
+
+
+// Acquisto canzoni con controllo MJC
+function purchaseSong(songColumn) {
+    if (!isUserLoggedIn()) {
+        alert("❌ Devi essere loggato per acquistare una canzone.");
+        return;
+    }
+
+    let userBalance = parseInt(document.body.dataset.mjc, 10);
+    let prices = { "billie_jean": 10, "beat_it": 6, "smooth_criminal": 5, "thriller": 8 };
+    let songPrice = prices[songColumn];
+
+    if (userBalance < songPrice) {
+        alert(`❌ Fondi insufficienti! Hai solo ${userBalance} MJC, ma servono ${songPrice} MJC.`);
+        return;
+    }
+
+    if (!confirm(`Vuoi acquistare ${songColumn.replace(/_/g, ' ')} per ${songPrice} MJC?`)) {
         return;
     }
 
     fetch("purchase_song.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ song: songColumn, price: price })
+        body: JSON.stringify({ song: songColumn })
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
-
         if (data.success) {
-            alert(`✅ Acquisto completato! Hai sbloccato ${songColumn.replace(/_/g, ' ')}.\nNuovo saldo: ${data.new_balance} MJC`);
-            document.getElementById("mjc-balance").innerText = `Saldo MJC: ${data.new_balance}`;
+            alert(`✅ Acquisto completato! Nuovo saldo: ${data.new_balance} MJC`);
+            document.body.dataset.mjc = data.new_balance; //  Aggiorna il saldo in tempo reale
         } else {
             alert(`❌ Errore: ${data.message}`);
         }
@@ -109,15 +165,3 @@ function purchaseSong(songColumn, price) {
     });
 }
 
-// FUNZIONE PER AGGIORNARE IL SALDO MJC IN TEMPO REALE
-function loadUserBalance() {
-    fetch('get_balance.php') // 🔥 Nuovo file PHP per recuperare il saldo MJC
-    .then(response => response.json())
-    .then(data => {
-        let balanceElem = document.getElementById("mjc-balance");
-        if (balanceElem) {
-            balanceElem.innerText = `Saldo MJC: ${data.saldo_mjc}`;
-        }
-    })
-    .catch(error => console.error("Errore nel recupero del saldo:", error));
-}
