@@ -42,7 +42,7 @@ if(!isset($_SESSION['id'])){
 $user_id = $_SESSION['id'];
 
 // Il percorso da salvare nel database (relativo alla root del progetto)
-$image_path = "/MichaelJacksons/uploads/profile_images/" . $filename;
+$image_path = "/gruppo07/uploads/profile_images/" . $filename;
 
 // Include la configurazione del database (assicurati che in config.php sia definita la connessione, ad es. $db)
 require_once "../php_in_comune/config.php";
