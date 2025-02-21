@@ -77,14 +77,11 @@ inputFile.addEventListener("change", function() {
 const deleteButton = document.getElementById('deleteButton');
 
 deleteButton.addEventListener("click", function() {
-// Recupera l'immagine di default
-const defaultImagePath = '../uploads/default.jpg';
 
-// Aggiorna l'immagine del profilo con quella di default
-const profileImage = document.getElementById('profileImage');
-if (profileImage) {
-profileImage.src = defaultImagePath;
-}
+/*
+// Recupera l'immagine di default
+const defaultImagePath = '../uploads/profile_images/default.jpg';
+*/
 
 // Resetta il campo di input file
 inputFile.value = '';
@@ -99,8 +96,8 @@ headers: {
 .then(response => response.json())
 .then(data => {
 if (data.success) {
-    
     alert('Immagine eliminata con successo');
+    const profilepic = document.getElementById("profilepic");
 } else {
     alert('Errore durante l\'eliminazione dell\'immagine');
 }

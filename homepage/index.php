@@ -47,7 +47,7 @@ session_start();
                             $imagePath = $row['immagine_profilo'];
                             $profileImage = (!empty($imagePath) && file_exists($_SERVER['DOCUMENT_ROOT'] . $imagePath))
                                 ? $imagePath
-                                : '../uploads/default.jpg';
+                                : '../uploads/profile_images/default.jpg';
                             echo "<img src='$profileImage' id='profileImage' class='user-image'>";
                         }
                     }
