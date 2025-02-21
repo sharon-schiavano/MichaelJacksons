@@ -18,29 +18,21 @@ const inputFile = document.getElementById('input-file');
 const imgView = document.getElementById('img-view');
 const profileImage = document.getElementById('profileImage');
 const uploadForm = document.getElementById('uploadForm');
-const submitButton = document.getElementById('submitButton');
+const browseLink = document.getElementById('browse-link');
 
-// Funzione per aggiornare l'anteprima dell'immagine
+
 function uploadImage(file) {
-if (!file || !file.type.startsWith("image/")) {
-alert("Seleziona un file immagine valido.");
-return;
-}
+    console.log("Upload file:", file);
+    if (!file || !file.type.startsWith("image/")) {
+        alert("Seleziona un file immagine valido.");
+        return;
+    }
 
-let imgLink = URL.createObjectURL(file);
-profileImage.src = imgLink;
-
-// Svuota il contenitore e aggiunge l'immagine aggiornata
-imgView.innerHTML = "";
-imgView.appendChild(profileImage);
+    let imgLink = URL.createObjectURL(file);
+    profileImage.src = imgLink;
+    imgView.innerHTML = "";
+    imgView.appendChild(profileImage);
 }
-
-// Evento per selezione manuale del file
-inputFile.addEventListener("change", function() {
-if (inputFile.files.length > 0) {
-uploadImage(inputFile.files[0]);
-}
-});
 
 
 // Eventi per il drag & drop
@@ -54,23 +46,32 @@ dropArea.style.border = "2px solid #ccc";
 });
 
 dropArea.addEventListener("drop", function(e) {
-e.preventDefault();
-dropArea.style.border = "2px solid #ccc";
+    e.preventDefault();
+    dropArea.style.border = "2px solid #ccc";
 
-let file = e.dataTransfer.files[0];
-if (file) {
-inputFile.files = e.dataTransfer.files;
-uploadImage(file);
-}
+    let file = e.dataTransfer.files[0];
+    if (file) {
+        let dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        inputFile.files = dataTransfer.files;
+
+        uploadImage(file);
+        inputFile.dispatchEvent(new Event("change")); // Forza il trigger dell'evento change
+    }
 });
 
-// Evento per il bottone di caricamento
-submitButton.addEventListener("click", function(event) {
-if (inputFile.files.length === 0) {
-alert("Seleziona o trascina un file prima di caricare.");
-event.preventDefault(); // Impedisce l'invio del form se nessun file è selezionato
-}
+browseLink.addEventListener("click", function () {
+    inputFile.click();
 });
+
+// Evento per il cambio di file tramite input
+inputFile.addEventListener("change", function() {
+    if (inputFile.files.length > 0) {
+        uploadImage(inputFile.files[0]);
+        uploadForm.submit(); // Invia il form automaticamente
+    }
+});
+
 
 //cancella l'immagine del profilo
 const deleteButton = document.getElementById('deleteButton');

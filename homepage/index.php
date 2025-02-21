@@ -15,7 +15,7 @@ session_start();
 
 <body>
     <?php include '../sidebar/sidebar.html'; ?>
-<!--
+    <!--
     <div class="search-box">
         <input type="text" id="search" placeholder="Cerca..." onkeyup="searchMenu()">
     </div>
@@ -27,11 +27,12 @@ session_start();
     </header>
 
     <main>
-        
+
 
         <?php if (isset($_SESSION['logged']) && $_SESSION['logged'] === true): ?>
             <section class="profile">
                 <h2>Bentornato, <?php echo $_SESSION['username'] ?>!</h2>
+                
                 <div class="drag-drop-area" id="drop-area">
                     <?php
                     if (isset($_SESSION['id'])) {
@@ -52,13 +53,12 @@ session_start();
                     }
                     ?>
                     <form action="upload.php" method="POST" enctype="multipart/form-data" id="uploadForm">
-                        <input type="file" id="input-file" accept="image/*" name="image" hidden>
-                        <div id="img-view">
-                            <p>Trascina o clicca qui per cambiare la foto</p>
+                        <div id="img-view" style="cursor: pointer;">
+                            <p>Trascina o <span id="browse-link" style="color: blue; cursor: pointer;">clicca qui</span> per cambiare la foto</p>
                         </div>
+                        <input type="file" id="input-file" accept="image/*" name="image" hidden>
                     </form>
                 </div>
-                <button type="submit" id="submitButton" form="uploadForm">Carica immagine</button>
                 <button type="button" id="deleteButton" class="delete-button">Elimina immagine</button>
             </section>
         <?php endif; ?>

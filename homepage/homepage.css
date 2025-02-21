@@ -54,7 +54,7 @@ main {
     background-attachment: fixed;
 }
 
-.profile h2 {
+.profile h2, h3{
     text-align: center;
     color: #bfb22b;
     margin-top: 2em;
@@ -110,28 +110,17 @@ main {
 }
 
 
-#submitButton, .delete-button {
+.delete-button {
     display: block;
     margin: 10px auto;
     padding: 10px 20px;
     color: white;
+    background-color: #dc3545;
     border: none;
     cursor: pointer;
     font-size: 16px;
     border-radius: 5px;
     transition: background-color 0.3s;
-}
-
-#submitButton {
-    background-color: #bfb22b;
-}
-
-#submitButton:hover {
-    background-color: #a29c1d;
-}
-
-.delete-button {
-    background-color: #dc3545;
 }
 
 .delete-button:hover {
