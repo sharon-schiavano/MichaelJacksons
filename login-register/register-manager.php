@@ -6,9 +6,19 @@
 
 	if( !empty($_POST) && $_POST['registrati'] )    {	
 
-		$username = pg_escape_string($db, $_POST["usernameregister"]);	//evitiamo l'SQL injection
+		$username = pg_escape_string($db,trim($_POST["usernameregister"]));	 //evitiamo l'SQL injection
 
-		$email = pg_escape_string($db, $_POST["email"]);
+		$email = pg_escape_string($db, trim($_POST["email"]));	//uso trim per eliminare gli spazi all'inizio e alla fine dell'input
+
+		if ($username == "") {
+
+			$_SESSION['emptyusername'] = true;
+
+			header("location: index.php");
+			exit;
+
+		}
+		
 
 		$_SESSION['oldusername'] = $username;	//salvo gli ultimi valori inseriti nel form per renderlo sticky
 
@@ -23,7 +33,7 @@
 
 		if (!$ret) {
 
-			echo "Errore durante la preparazione della query: " . preg_last_error(); 
+			echo "Errore durante la preparazione della query: " . pg_last_error(); 
 			exit;
 		} 
 
@@ -47,13 +57,13 @@
 
 		if (!$ret) {
 
-			echo "Errore durante la preparazione della query: " . preg_last_error(); 
+			echo "Errore durante la preparazione della query: " . pg_last_error(); 
 			exit;
 		} 
 
 		else {
 
-			$ret = pg_execute($db,"ricercaEmail",array($username));
+			$ret = pg_execute($db,"ricercaEmail",array($email));
 
 			if (pg_num_rows($ret) != 0)	{	//email già presente nel db: impossibile registrare il nuovo utente
 
@@ -76,7 +86,7 @@
 
 		if (!$ret) {
 
-			echo "Errore durante la preparazione della query: " . preg_last_error(); 
+			echo "Errore durante la preparazione della query: " . pg_last_error(); 
 			exit;
 		} 
 
@@ -85,7 +95,7 @@
 			$ret = pg_execute($db, "inserisciUtente", array($username, $email, $password));
 
 			if(!$ret){
-				echo "Errore: impossibile completare la registrazione di questo account!" . pg_last_error($db);
+				echo "Errore: impossibile completare la registrazione di questo account!" . pg_last_error();
 				exit;
 			}
 

@@ -12,7 +12,16 @@
 
 	session_start();
 
-	$input = pg_escape_string($db,$_POST["usernamelogin"]);
+	$input = pg_escape_string($db,trim($_POST["usernamelogin"]));
+
+	if ($input == "") {
+
+		$_SESSION['emptyusername'] = true;
+
+		header("location: index.php");
+		exit;
+
+	}
 
 	$_SESSION['oldinput'] = $input;
 
@@ -85,8 +94,7 @@
 		header("Location: index.php");
 	}
 
-
-	 
+	pg_close($db);
 	
 
 ?>

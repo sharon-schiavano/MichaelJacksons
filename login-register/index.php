@@ -124,6 +124,16 @@
 
                         }
 
+                        else if(isset($_SESSION['emptyusername']) && $_SESSION['emptyusername'] == true) {
+
+                            echo '<div class="message-error">';
+                            echo "<i class='bx bx-error-circle'></i>";
+                            echo "<p>Registrazione non riuscita: Campo 'Username' vuoto!</p>";
+                            echo '</div>';
+                            unset($_SESSION['emptyusername']);
+
+                        }
+
                         else if(isset($_SESSION['existentusername']) && $_SESSION['existentusername'] == true) {
                             
                             echo '<div class="message-error">';
