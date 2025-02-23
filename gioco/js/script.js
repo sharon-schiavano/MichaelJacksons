@@ -47,11 +47,11 @@ const volumeControl = document.getElementById('volume');
 mainSong.volume = volumeControl.value;
 const countdownElement = document.getElementById("countdown");
 const message = document.getElementById("risultato");
-const wowSound = new Audio("../assets/audio/great.mp3");
+const wowSound = new Audio("../assets/audio/Hee hee.mp3");
 wowSound.volume = volumeControl.value;
-const awesomeSound = new Audio("../assets/audio/awesome.mp3");
+const awesomeSound = new Audio("../assets/audio/baby.mp3");
 awesomeSound.volume = volumeControl.value;
-const amazingSound = new Audio("../assets/audio/amazing.mp3");
+const amazingSound = new Audio("../assets/audio/dapdap.mp3");
 amazingSound.volume = volumeControl.value;
 countdownElement.classList.add("hidden");
 canzoneSelezionata = -1;
@@ -120,9 +120,6 @@ document.addEventListener('visibilitychange', function () {
   }
 });
 
-////////////////////////////////////////////////////////////// FUNZIONI //////////////////////////////////////////////////////////////
-
-
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const response = await fetch("../php_in_comune/getUser.php");
@@ -152,7 +149,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Errore nel recupero dell'utente:", error);
   }
 });
-
+////////////////////////////////////////////////////////////// FUNZIONI //////////////////////////////////////////////////////////////
 
 async function aggiornaPunteggio(canzone, punteggio) {
   try {
@@ -304,18 +301,15 @@ function gameStart(num) {
   startCountdown(() => {
     // Questo codice viene eseguito solo dopo il countdown
     if (num == 2) {
-      mainSong.src = "../assets/audio/Beat It - Michael Jackson (Lyrics).mp3";
+      mainSong.src = "../assets/audio/beat-it.mp3";
     } else if (num == 3) {
-      mainSong.src = "../assets/audio/Michael Jackson - Rock With You [Lyrics].mp3";
+      mainSong.src = "../assets/audio/rock-with-you.mp3";
     } else if (num == 4) {
-      mainSong.src = "../assets/audio/Michael Jackson - Smooth Criminal (Single Version) HD.mp3";
+      mainSong.src = "../assets/audio/smooth-criminal.mp3";
     } else if (num == 5) {
-      mainSong.src = "../assets/audio/Michael Jackson - Thriller (Lyrics).mp3";
-    }/*else if (num == 6) {
-      mainSong.src = "./assets/Michael Jackson - Chicago (Lyrics).mp3";
-    }else if (num == 7) {
-      mainSong.src = "./assets/Michael Jackson - P.Y.T. (Pretty Young Thing) (Lyrics).mp3";
-    }*/
+      mainSong.src = "../assets/audio/thriller.mp3";
+    }
+    
     mainSong.play();
     arrowDraw();
     setInterval(draw, 1);
@@ -455,8 +449,6 @@ function gameRestart() {
     playButton3.style.display = "flex";
     playButton4.style.display = "flex";
     playButton5.style.display = "flex";
-    //playButton6.style.display = "flex";
-    //playButton7.style.display = "flex";
     startModal.style.display = "flex";
     modalOverlay.style.visibility = "visible";
   }
@@ -494,7 +486,7 @@ function clearNumbers() {
   maxScore = 0;
   scoreDisplay.innerHTML = "Score: " + `${score}`;
   combo = 0;
-  comboText.textContent = "combo";
+  comboText.textContent = "COMBO";
   comboCount.innerHTML = "";
 }
 

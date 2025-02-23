@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 16.5
--- Dumped by pg_dump version 16.5
+-- Dumped from database version 16.4
+-- Dumped by pg_dump version 16.4
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -42,7 +42,46 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: utenti; Type: TABLE; Schema: public; Owner: postgres
+-- Name: prodotti; Type: TABLE; Schema: public; Owner: www
+--
+
+CREATE TABLE public.prodotti (
+    id integer NOT NULL,
+    nome character varying(255) NOT NULL,
+    descrizione text,
+    prezzo numeric(10,2) NOT NULL,
+    immagine character varying(255),
+    tipo character varying(20) NOT NULL,
+    CONSTRAINT prodotti_tipo_check CHECK (((tipo)::text = ANY (ARRAY[('prodotto'::character varying)::text, ('canzone'::character varying)::text])))
+);
+
+
+ALTER TABLE public.prodotti OWNER TO www;
+
+--
+-- Name: prodotti_id_seq; Type: SEQUENCE; Schema: public; Owner: www
+--
+
+CREATE SEQUENCE public.prodotti_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.prodotti_id_seq OWNER TO www;
+
+--
+-- Name: prodotti_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: www
+--
+
+ALTER SEQUENCE public.prodotti_id_seq OWNED BY public.prodotti.id;
+
+
+--
+-- Name: utenti; Type: TABLE; Schema: public; Owner: www
 --
 
 CREATE TABLE public.utenti (
@@ -51,7 +90,7 @@ CREATE TABLE public.utenti (
     email character varying(100) NOT NULL,
     password text NOT NULL,
     mjc integer DEFAULT 0,
-    immagine_profilo character varying(255) DEFAULT '../uploads/default.jpg'::character varying,
+    immagine_profilo character varying(255) DEFAULT '../uploads/profile_images/default.jpg'::character varying,
     data_iscrizione character varying(10) DEFAULT to_char((CURRENT_DATE)::timestamp with time zone, 'DD/MM/YYYY'::text),
     valuta integer DEFAULT 0,
     billie_jean integer DEFAULT 0,
@@ -61,15 +100,15 @@ CREATE TABLE public.utenti (
     thriller integer DEFAULT 0,
     unlocked_billiejean boolean DEFAULT false,
     unlocked_beatit boolean DEFAULT false,
-    unlocked_smoothcriminal boolean DEFAULT false,
-    unlocked_thriller boolean DEFAULT false
+    unlocked_thriller boolean DEFAULT false,
+    unlocked_smoothcriminal boolean DEFAULT false
 );
 
 
-ALTER TABLE public.utenti OWNER TO postgres;
+ALTER TABLE public.utenti OWNER TO www;
 
 --
--- Name: utenti_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: utenti_id_seq; Type: SEQUENCE; Schema: public; Owner: www
 --
 
 CREATE SEQUENCE public.utenti_id_seq
@@ -81,47 +120,81 @@ CREATE SEQUENCE public.utenti_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.utenti_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.utenti_id_seq OWNER TO www;
 
 --
--- Name: utenti_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: utenti_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: www
 --
 
 ALTER SEQUENCE public.utenti_id_seq OWNED BY public.utenti.id;
 
 
 --
--- Name: utenti id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: prodotti id; Type: DEFAULT; Schema: public; Owner: www
+--
+
+ALTER TABLE ONLY public.prodotti ALTER COLUMN id SET DEFAULT nextval('public.prodotti_id_seq'::regclass);
+
+
+--
+-- Name: utenti id; Type: DEFAULT; Schema: public; Owner: www
 --
 
 ALTER TABLE ONLY public.utenti ALTER COLUMN id SET DEFAULT nextval('public.utenti_id_seq'::regclass);
 
 
 --
--- Data for Name: utenti; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: prodotti; Type: TABLE DATA; Schema: public; Owner: www
 --
 
-COPY public.utenti (id, username, email, password, mjc, immagine_profilo, data_iscrizione, valuta, billie_jean, beat_it, rock_with_you, smooth_criminal, thriller, unlocked_billiejean, unlocked_beatit, unlocked_smoothcriminal, unlocked_thriller) FROM stdin;
-17	rocco	hunt@gmail.com	$2y$10$v91oHG6c04qSwaI6DFUQvexWcGmmIZLiud7McW6bJNfiAIxYmSrfC	1	../uploads/default_profile.png	13/02/2025	1	60625	64175	20250	0	0	f	f	f	f
-11	ciccio	pasticcio@gmail.com	$2y$10$Y7iBS7vg4lA/Yclcvp6nlO8PsDShU8BSsMfucBWewOzkqwbuSwfqW	0	../uploads/default_profile.png	11/02/2025	0	0	0	0	0	0	f	f	f	f
-8	gonzalo higuain	jojo@gmail.com	$2y$10$XDFx2FDGN2YlU4237Prl.uDShy7bNflSo7MZD0Bhspd/2YgyrTbny	1	https://b.fssta.com/uploads/application/soccer/headshots/1500.vresize.350.350.medium.8.png	09/02/2025	0	10	0	0	0	0	f	f	f	f
-6	michael jordan	sesso@gmail.com	$2y$10$5.S.GMOK8j5rwh1ZxOo.leb1udd7Ks82yFit0HTUMOBT6FK1IHkFy	2	https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/backup/1-1ef7f627-301a-6be4-a79b-ab34b8448102.png	09/02/2025	0	2	0	35	0	2	f	f	f	f
-16	domysex	revenge@gmail.com	$2y$10$3lNASixMnyPqCMvVZ/lETeRXzcnQZzx.k71m.dqnctSdT1BU5tOXe	0	../uploads/default_profile.png	13/02/2025	0	0	0	0	0	0	f	f	f	f
-18	elnino	corr@gmail.com	$2y$10$dB4Ncf1VbCzl4Nj.H45IL.zdC7l.mxKetd21FGwOpb84dAAOoKclK	303	../uploads/default_profile.png	16/02/2025	303	0	0	56700	0	1000000	f	t	f	t
-7	maurizio costanzo	odioInegri@gmail.com	$2y$10$fJprEFLgpW0y/yM3IR5uZeftEV0wjueH9XfYHWdatXXDYvR3nYUm.	30	https://upload.wikimedia.org/wikipedia/commons/e/ec/Costanzobau_%28cropped%29.jpg	09/02/2025	0	0	7	0	0	0	f	f	t	f
-5	domenico	ciao@gmail.com	$2y$10$oR6ypeCUdrCsAA1NOjImsuk4JSFHb1SIdfWFZ4W7jIImVJJl2vGg6	76	../uploads/67ab78c5c674e.jpg	09/02/2025	21	0	70900	0	39675	94800	f	t	f	t
+COPY public.prodotti (id, nome, descrizione, prezzo, immagine, tipo) FROM stdin;
+1	Thriller (Album)	Album musicale Thriller.	15.00	../assets/images/shop/thriller.jpg	prodotto
+2	Bad (Album)	Album musicale Bad.	12.00	../assets/images/shop/bad.jpg	prodotto
+3	FunkoPop! MJ	FunkoPop! di Michael Jackson.	20.00	../assets/images/shop/funkomj1.png	prodotto
+4	Maglietta MJ	T-shirt con immagine di Michael Jackson.	20.00	../assets/images/shop/mjtee.png	prodotto
+5	Poster MJ	Poster di Michael Jackson.	10.00	../assets/images/shop/posterjackson.jpg	prodotto
+7	Billie Jean	Canzone di Michael Jackson.	10.00	../assets/images/shop/billiejean.jpg	canzone
+8	Beat It	Canzone di Michael Jackson.	6.00	../assets/images/shop/beatit.png	canzone
+9	Smooth Criminal	Canzone di Michael Jackson.	5.00	../assets/images/shop/smoothcriminal.jpg	canzone
+6	MJ The Experience Wii	Gioco Wii di Michael Jackson.	30.00	../assets/images/shop/jacksonwii.jpg	prodotto
+10	Thriller	Canzone di Michael Jackson.	8.00	../assets/images/shop/thrillersong.jpg	canzone
 \.
 
 
 --
--- Name: utenti_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Data for Name: utenti; Type: TABLE DATA; Schema: public; Owner: www
 --
 
-SELECT pg_catalog.setval('public.utenti_id_seq', 18, true);
+COPY public.utenti (id, username, email, password, mjc, immagine_profilo, data_iscrizione, valuta, billie_jean, beat_it, rock_with_you, smooth_criminal, thriller, unlocked_billiejean, unlocked_beatit, unlocked_thriller, unlocked_smoothcriminal) FROM stdin;
+37	mario	mario@gmail.com	$2y$10$i3g30sChPPc7lDWaKF1KOOkMyfEgw0aSWDL1x4IWFhJQZNrgQaCW6	0	../uploads/profile_images/default.jpg	23/02/2025	100	0	0	0	0	0	f	f	f	f
+38	omar	omar@gmail.com	$2y$10$1nskGom1HUODXPTYcJp4S.Waqo/2grPJNAReU2XByUjcmWIZEV.Bi	0	../uploads/profile_images/default.jpg	23/02/2025	100	0	0	0	0	0	f	f	f	f
+\.
 
 
 --
--- Name: utenti utenti_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: prodotti_id_seq; Type: SEQUENCE SET; Schema: public; Owner: www
+--
+
+SELECT pg_catalog.setval('public.prodotti_id_seq', 10, true);
+
+
+--
+-- Name: utenti_id_seq; Type: SEQUENCE SET; Schema: public; Owner: www
+--
+
+SELECT pg_catalog.setval('public.utenti_id_seq', 38, true);
+
+
+--
+-- Name: prodotti prodotti_pkey; Type: CONSTRAINT; Schema: public; Owner: www
+--
+
+ALTER TABLE ONLY public.prodotti
+    ADD CONSTRAINT prodotti_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: utenti utenti_email_key; Type: CONSTRAINT; Schema: public; Owner: www
 --
 
 ALTER TABLE ONLY public.utenti
@@ -129,7 +202,7 @@ ALTER TABLE ONLY public.utenti
 
 
 --
--- Name: utenti utenti_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: utenti utenti_pkey; Type: CONSTRAINT; Schema: public; Owner: www
 --
 
 ALTER TABLE ONLY public.utenti
@@ -137,7 +210,7 @@ ALTER TABLE ONLY public.utenti
 
 
 --
--- Name: utenti utenti_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: utenti utenti_username_key; Type: CONSTRAINT; Schema: public; Owner: www
 --
 
 ALTER TABLE ONLY public.utenti
@@ -145,7 +218,7 @@ ALTER TABLE ONLY public.utenti
 
 
 --
--- Name: utenti trigger_aggiorna_valuta; Type: TRIGGER; Schema: public; Owner: postgres
+-- Name: utenti trigger_aggiorna_valuta; Type: TRIGGER; Schema: public; Owner: www
 --
 
 CREATE TRIGGER trigger_aggiorna_valuta BEFORE UPDATE ON public.utenti FOR EACH ROW WHEN ((old.mjc IS DISTINCT FROM new.mjc)) EXECUTE FUNCTION public.aggiorna_valuta();

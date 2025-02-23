@@ -1,18 +1,4 @@
-//barra di ricerca
-
-function searchMenu() {
-    let input = document.getElementById("search").value.toLowerCase();
-    let items = document.querySelectorAll(".card h4");
-
-    items.forEach(item => {
-        let text = item.textContent.toLowerCase();
-        let card = item.closest(".card");
-        card.style.display = text.includes(input) ? "block" : "none";
-    });
-}
-
 //immagine del profilo
-
 const dropArea = document.getElementById('drop-area');
 const inputFile = document.getElementById('input-file');
 const imgView = document.getElementById('img-view');
@@ -78,10 +64,10 @@ const deleteButton = document.getElementById('deleteButton');
 
 deleteButton.addEventListener("click", function() {
 
-/*
+
 // Recupera l'immagine di default
 const defaultImagePath = '../uploads/profile_images/default.jpg';
-*/
+
 
 // Resetta il campo di input file
 inputFile.value = '';
@@ -96,8 +82,9 @@ headers: {
 .then(response => response.json())
 .then(data => {
 if (data.success) {
+    profileImage.src = defaultImagePath;
     alert('Immagine eliminata con successo');
-    const profilepic = document.getElementById("profilepic");
+    location.reload();
 } else {
     alert('Errore durante l\'eliminazione dell\'immagine');
 }

@@ -305,6 +305,10 @@ label[for="volume"] {
   }
 }
 
+footer {
+  padding: 20px;
+}
+
 @media only screen and (min-width: 768px) {
   .controls {
     right: 0;

@@ -16,7 +16,7 @@ if (isset($_GET['id'])) {
     $result = pg_query_params($db, $query, [$id]);
 
     if (!$result) {
-        echo json_encode(["success" => false, "error" => "Errore nell'esecuzione della query"]);
+        echo json_encode(["success" => false, "error" => "Errore nell'esecuzione della query"]/*, "username" => $_SESSION['username']*/);
         exit;
     }
 

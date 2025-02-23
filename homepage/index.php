@@ -15,11 +15,7 @@ session_start();
 
 <body>
     <?php include '../sidebar/sidebar.html'; ?>
-    <!--
-    <div class="search-box">
-        <input type="text" id="search" placeholder="Cerca..." onkeyup="searchMenu()">
-    </div>
--->
+
     <header>
         <figure>
             <img src="../assets/images/logo/white-logo.png" alt="logo">
@@ -53,7 +49,7 @@ session_start();
                     }
                     ?>
                     <form action="upload.php" method="POST" enctype="multipart/form-data" id="uploadForm">
-                        <div id="img-view" style="cursor: pointer;">
+                        <div id="img-view">
                             <p>Trascina o <span id="browse-link" style="color: blue; cursor: pointer;">clicca qui</span> per cambiare la foto</p>
                         </div>
                         <input type="file" id="input-file" accept="image/*" name="image" hidden>
@@ -88,25 +84,31 @@ session_start();
         </section>
 
         <section class="trending">
+
             <h2>Articoli di Tendenza</h2>
+
             <div class="list">
-                <?php
-                $articles = [
-                    ["article1.jpg", "Maglietta Michael Jackson", "25$"],
-                    ["article2.jpg", "Tazza Michael Jackson", "10$"],
-                    ["article3.jpg", "Poster Michael Jackson", "15$"]
-                ];
-                foreach ($articles as $article) {
-                    echo "<div class='card'>
-                            <img src='../images/$article[0]' alt='$article[1]'>
-                            <h4>$article[1]</h4>
-                            <p>$article[2]</p>
-                          </div>";
-                }
-                ?>
+
+                <div class="card">
+                    <img src="../assets/images/shop/funkomj1.png" alt="Articolo 1">
+                    <h4>FunkoPop! MJ</h4>
+                    <p>20.00€</p>
+                </div>
+
+                <div class="card">
+                    <img src="../assets/images/shop/mjtee.png" alt="Articolo 2">
+                    <h4>Maglietta MJ</h4>
+                    <p>20.00€</p>
+                </div>
+
+                <div class="card">
+                    <img src="../assets/images/shop/bad.jpg" alt="Articolo 3">
+                    <h4>Bad (Album)</h4>
+                    <p>12.00€</p>
+                </div>
             </div>
-            <a href="../shop/index.php" class="read-more">Vai allo shop</a>
-        </section>
+    <a href="../shop/index.php" class="shop-button">Vai allo shop</a>
+</section>
 
         <section class="players">
             <h2>Migliori giocatori del mese</h2>

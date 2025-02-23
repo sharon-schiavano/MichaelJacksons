@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     updateCartCount();
     loadCart();
-    checkUserStatus(); // Controlla lo stato dell'utente al caricamento della pagina
+    checkUserStatus(); // Controlla se l'utente è loggato
 
     let cartIcon = document.getElementById("cart-icon");
     let cartMenu = document.getElementById("cart-menu");
@@ -13,17 +13,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Controlla se l'utente è loggato e aggiorna la sessione nel frontend
+// Controlla se l'utente è loggato
 function checkUserStatus() {
     fetch("../php_in_comune/getUser.php")
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 document.body.dataset.loggedIn = "true";
-                document.body.dataset.mjc = data.valuta; // 🔥 Salva il saldo MJC nell'HTML
+                document.body.dataset.mjc = data.valuta; //  Salva il saldo MJC nell'HTML
             } else {
                 document.body.dataset.loggedIn = "false";
-                localStorage.removeItem("cart"); // 🔥 Se l'utente è sloggato, svuota il carrello
+                localStorage.removeItem("cart"); //  Se l'utente sloggato, svuota il carrello
                 updateCartCount();
                 loadCart();
             }
@@ -31,12 +31,12 @@ function checkUserStatus() {
         .catch(error => console.error("Errore nel controllo utente:", error));
 }
 
-//Funzione per verificare se l'utente è loggato
+// Verifica se l'utente è loggato
 function isUserLoggedIn() {
     return document.body.dataset.loggedIn === "true";
 }
 
-// Aggiunta al carrello SOLO se l'utente è loggato
+// Aggiunge un prodotto al carrello solo se loggato
 function addToCart(id, name, price) {
     if (!isUserLoggedIn()) {
         alert("❌ Devi essere loggato per aggiungere prodotti al carrello.");
@@ -57,13 +57,43 @@ function addToCart(id, name, price) {
     loadCart();
 }
 
-//Rimuove un prodotto dal carrello
+// Rimuove un prodotto dal carrello
 function removeFromCart(id) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     cart = cart.filter(p => p.id !== id);
     localStorage.setItem("cart", JSON.stringify(cart));
     updateCartCount();
     loadCart();
+}
+
+// Aumenta la quantità di un prodotto nel carrello
+function increaseQuantity(id) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let item = cart.find(p => p.id === id);
+
+    if (item) {
+        item.quantity += 1;
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartCount();
+        loadCart();
+    }
+}
+
+// Diminuisce la quantità di un prodotto nel carrello (se arriva a 0, lo rimuove)
+function decreaseQuantity(id) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let item = cart.find(p => p.id === id);
+
+    if (item) {
+        if (item.quantity > 1) {
+            item.quantity -= 1;
+        } else {
+            cart = cart.filter(p => p.id !== id);
+        }
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartCount();
+        loadCart();
+    }
 }
 
 // Aggiorna il numero di prodotti nel carrello
@@ -76,7 +106,7 @@ function updateCartCount() {
     }
 }
 
-//  Carica il carrello e mostra i prodotti
+// Carica il carrello e mostra i prodotti con la gestione della quantità
 function loadCart() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     let cartItems = document.getElementById("cart-items");
@@ -93,15 +123,19 @@ function loadCart() {
         let total = 0;
         cart.forEach(item => {
             total += item.price * item.quantity;
-            cartItems.innerHTML += `<li>${item.name} - ${item.quantity} x ${item.price}€ 
-                <button onclick="removeFromCart(${item.id})">❌</button></li>`;
+            cartItems.innerHTML += `
+                <li>
+                    ${item.name} - ${item.quantity} x ${item.price}€ 
+                    <button onclick="decreaseQuantity(${item.id})">➖</button>
+                    <button onclick="increaseQuantity(${item.id})">➕</button>
+                    <button onclick="removeFromCart(${item.id})">❌</button>
+                </li>`;
         });
 
         totalElem.innerText = `Totale: ${total} €`;
     }
 }
 
-// Toggle del carrello (APRIRE/CHIUDERE)
 function toggleCart() {
     let cartMenu = document.getElementById("cart-menu");
 
@@ -110,58 +144,65 @@ function toggleCart() {
         return;
     }
 
-    //  Se il carrello ha la classe 'hidden', la rimuove e lo mostra
+    // Se il carrello è nascosto, lo mostra
     if (cartMenu.classList.contains("hidden")) {
         cartMenu.classList.remove("hidden");
     }
 
-    // Alterna la classe "show" per aprire o chiudere il carrello
+    // Alterna la classe "show" per far apparire il carrello
     cartMenu.classList.toggle("show");
 
-    // Se il carrello viene chiuso, riaggiunge la classe 'hidden' per nasconderlo
+    // Se il carrello viene chiuso, lo nasconde di nuovo
     if (!cartMenu.classList.contains("show")) {
         cartMenu.classList.add("hidden");
     }
 }
 
+function purchaseSong(songName, songPrice) {
+    // Formatta il nome della canzone
+    const formattedSongName = songName.toLowerCase().replace(/\s+/g, "_");
 
-// Acquisto canzoni con controllo MJC
-function purchaseSong(songColumn) {
-    if (!isUserLoggedIn()) {
-        alert("❌ Devi essere loggato per acquistare una canzone.");
+    // Mostra un alert di conferma
+    const confirmPurchase = confirm(`Sei sicuro di voler acquistare "${songName}" per ${songPrice} MJC?`);
+
+    if (!confirmPurchase) {
+        alert("Acquisto annullato."); // L'utente ha annullato l'acquisto
         return;
     }
 
-    let userBalance = parseInt(document.body.dataset.mjc, 10);
-    let prices = { "billie_jean": 10, "beat_it": 6, "smooth_criminal": 5, "thriller": 8 };
-    let songPrice = prices[songColumn];
-
-    if (userBalance < songPrice) {
-        alert(`❌ Fondi insufficienti! Hai solo ${userBalance} MJC, ma servono ${songPrice} MJC.`);
-        return;
-    }
-
-    if (!confirm(`Vuoi acquistare ${songColumn.replace(/_/g, ' ')} per ${songPrice} MJC?`)) {
-        return;
-    }
-
+    // Procedi con l'acquisto
     fetch("purchase_song.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ song: songColumn })
+        body: JSON.stringify({ song: formattedSongName, price: songPrice })
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
             alert(`✅ Acquisto completato! Nuovo saldo: ${data.new_balance} MJC`);
-            document.body.dataset.mjc = data.new_balance; //  Aggiorna il saldo in tempo reale
+            document.body.dataset.mjc = data.new_balance; // Aggiorna il saldo MJC nell'HTML
+
+            // Aggiorna il valore di "Valuta" nella sidebar
+            const mjcSpan = document.getElementById("mjc");
+            if (mjcSpan) {
+                mjcSpan.innerHTML = "Valuta: " + data.new_balance + '<i class="bx bxs-coin"></i>';
+            }
+
+            // Aggiorna i pulsanti delle canzoni sbloccate solo se esistono
+            const playButton1 = document.getElementById("playButton1");
+            const playButton2 = document.getElementById("playButton2");
+            const playButton4 = document.getElementById("playButton4");
+            const playButton5 = document.getElementById("playButton5");
+
+            if (playButton1 && data.unlocked_billiejean === 't') playButton1.style.display = "block";
+            if (playButton2 && data.unlocked_beatit === 't') playButton2.style.display = "block";
+            if (playButton4 && data.unlocked_smoothcriminal === 't') playButton4.style.display = "block";
+            if (playButton5 && data.unlocked_thriller === 't') playButton5.style.display = "block";
         } else {
-            alert(`❌ Errore: ${data.message}`);
+            throw new Error(data.message);
         }
     })
     .catch(error => {
-        alert("❌ Errore di connessione con il server.");
-        console.error("Errore:", error);
+        alert("❌ Errore: " + error.message);
     });
 }
-

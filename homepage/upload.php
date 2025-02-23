@@ -33,9 +33,7 @@ if(!move_uploaded_file($_FILES["image"]["tmp_name"], $destination)){
     exit("Can't move uploaded file");
 }
 
-/* --- Comandi necessari per aggiornare il database --- */
 
-// Assicurati che l'utente sia loggato
 if(!isset($_SESSION['id'])){
     exit("User not logged in");
 }
@@ -43,11 +41,9 @@ $user_id = $_SESSION['id'];
 
 // Il percorso da salvare nel database (relativo alla root del progetto)
 $image_path = "/gruppo07/uploads/profile_images/" . $filename;
-
-// Include la configurazione del database (assicurati che in config.php sia definita la connessione, ad es. $db)
 require_once "../php_in_comune/config.php";
 
-// Prepara ed esegui la query per aggiornare l'immagine di profilo
+// query per aggiornare l'immagine di profilo
 $sql = "UPDATE utenti SET immagine_profilo = $1 WHERE id = $2";
 $ret = pg_prepare($db, "update_profile_image", $sql);
 if(!$ret){

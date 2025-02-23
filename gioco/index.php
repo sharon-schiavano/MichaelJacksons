@@ -54,11 +54,6 @@
       <button id="playButton4" style = "display: none ">Play Smooth Criminal</button>
       <button id="playButton5" style = "display: none ">Play Thriller</button>
 
-      <!--  ERANO DI TROPPO
-      <button id="playButton6">Play Chicago</button>
-      <button id="playButton7">Play P.Y.T. (Pretty Young Thing)</button>
-      -->
-
     </div>
 
     <div class="countdown-container">
@@ -71,7 +66,7 @@
       <img id="up" src="../assets/images/game/staticUp.png">
       <img id="right" src="../assets/images/game/staticRight.png">
     </div>
-    <audio id="mainSong" src="../assets/audio/rock-with-you.mp3"></audio>
+    <audio id="mainSong" src="../assets/audio/billie-jean.mp3"></audio>
     <audio id="endApplause" src="../assets/audio/applause.mp3"></audio>
     <?php include '../footer/footer.html'; ?>
   </body>
